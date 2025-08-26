@@ -91,6 +91,12 @@ app.get("/auth/callback", async (req, res) => {
   const codeVerifier = pkceStore[state];
   delete pkceStore[state]; // tránh reuse
 
+  // Kiểm tra codeVerifier
+  if (!codeVerifier || typeof codeVerifier !== "string") {
+    console.error("Lỗi: codeVerifier không hợp lệ:", codeVerifier);
+    return res.status(500).send("❌ code_verifier không hợp lệ!");
+  }
+
   try {
     // Đổi code -> access_token
     const tokenRes = await axios.post(
@@ -108,6 +114,11 @@ app.get("/auth/callback", async (req, res) => {
     );
 
     const accessToken = tokenRes.data.access_token;
+
+    if (!accessToken) {
+      console.error("Lỗi: Không nhận được access_token:", tokenRes.data);
+      return res.status(500).send("❌ Không nhận được access_token từ Zalo!");
+    }
 
     // Tạo appsecret_proof
     const appSecretProof = generateAppSecretProof(accessToken, APP_SECRET);
