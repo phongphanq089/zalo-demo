@@ -117,6 +117,7 @@ app.get("/auth/callback", async (req, res) => {
     );
 
     const accessToken = tokenRes.data.access_token;
+    console.log("accessToken được lấy thành công", accessToken)
 
     if (!accessToken) {
       console.error("Lỗi: Không nhận được access_token:", tokenRes.data);
