@@ -127,6 +127,8 @@ app.get("/auth/callback", async (req, res) => {
     // Tạo appsecret_proof
     const appSecretProof = generateAppSecretProof(accessToken, APP_SECRET);
 
+    console.log("Trả về AppSecretProof:", appSecretProof);
+
     // Gọi API lấy user info
     const userRes = await axios.get("https://graph.zalo.me/v2.0/me", {
       params: {
@@ -138,8 +140,10 @@ app.get("/auth/callback", async (req, res) => {
       },
     });
 
-    // Hiển thị thông tin user
-    res.send(`
+    try {
+      if (userRes.data && !userRes.data.error) {
+        // Hiển thị thông tin user
+        res.send(`
       <h2>Thông tin user</h2>
       <p><b>ID:</b> ${userRes.data.id}</p>
       <p><b>Name:</b> ${userRes.data.name}</p>
@@ -147,6 +151,17 @@ app.get("/auth/callback", async (req, res) => {
       <br><br>
       <a href="/">⬅️ Quay lại Home</a>
     `);
+      } else {
+        console.error("Lỗi từ API /me:", userRes.data);
+        res.status(500).send("❌ Không thể lấy thông tin người dùng!");
+      }
+    } catch (err) {
+      console.error("Lỗi chi tiết:", err.response?.data || err.message);
+      res.status(500).json({ error123: err.response?.data || err.message });
+    }
+
+    // Hiển thị thông tin user
+
   } catch (err) {
     console.error("Lỗi chi tiết:", err.response?.data || err.message);
     res.status(500).json({ error123: err.response?.data || err.message });
