@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
   res.send(`
     <html>
       <head>
-       <meta name="zalo-platform-site-verification" content="RV26S8lY87j0rODJnSGjNpBpzqRUXIGQCpSt" />
+       <meta property="zalo-platform-site-verification" content="QTQC1PRtFJrpsUqPgjLW72wanG72qX9SE3aq" />
 
         <title>Login Zalo Demo</title>
       </head>
