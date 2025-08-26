@@ -133,6 +133,7 @@ app.get("/auth/callback", async (req, res) => {
       <a href="/">⬅️ Quay lại Home</a>
     `);
   } catch (err) {
+    console.error("Lỗi chi tiết:", err.response?.data || err.message);
     res.status(500).json({ error123: err.response?.data || err.message });
   }
 });
