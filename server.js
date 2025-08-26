@@ -5,8 +5,8 @@ import crypto from "crypto";
 const app = express();
 
 // ⚡ Thay bằng APP_ID và APP_SECRET thật của bạn trong Zalo Developers
-const APP_ID = "2154611541573635802";
-const APP_SECRET = "K01iCwiDSG6lRn33FIQT";
+const APP_ID = "1271678179692666185";
+const APP_SECRET = "BE3XgKgB76AFGPLk6cm1";
 const REDIRECT_URI = "https://zalo-demo-n675.onrender.com/auth/callback"; // hoặc https://xxx.ngrok-free.app/auth/callback khi test local
 
 // Bộ nhớ tạm cho PKCE
